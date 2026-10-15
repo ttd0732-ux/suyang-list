@@ -3,202 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>전국 수양관 리스트</title>
-<meta property="og:title" content="전국 수양관 리스트">
-<meta property="og:description" content="전국 수양관을 지역별로 찾아보세요">
+<title>전국수련회 장소 리스트</title>
+<meta name="description" content="교회가 실제 수련회 갈 수 있는 전국 수양관·수련시설 리스트">
+<meta property="og:title" content="전국수련회 장소 리스트">
+<meta property="og:description" content="교회가 실제 수련회 갈 수 있는 전국 수양관·수련시설 리스트">
 <meta property="og:image" content="https://suyang-list.vercel.app/og-image.jpg">
 <meta property="og:url" content="https://suyang-list.vercel.app/">
-<meta name="theme-color" content="#4a8b5c">
+<meta property="og:type" content="website">
 <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2e7d32">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Malgun Gothic','맑은 고딕',sans-serif;background:#f5f3ee;color:#333;line-height:1.6}
-.header{background:linear-gradient(135deg,#2d5a3d,#4a8b5c);color:#fff;padding:28px 20px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.15)}
-.header h1{font-size:1.6rem;margin-bottom:6px}
-.header p{font-size:.9rem;opacity:.9}
-.search-bar{max-width:700px;margin:18px auto 0;padding:0 16px}
-.search-bar input{width:100%;padding:13px 18px;border:none;border-radius:30px;font-size:1rem;box-shadow:0 2px 8px rgba(0,0,0,.1);outline:none}
-.search-bar input:focus{box-shadow:0 2px 12px rgba(74,139,92,.4)}
-.region-tabs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:16px;max-width:900px;margin:0 auto}
-.region-tab{padding:8px 18px;border:2px solid #4a8b5c;background:#fff;color:#4a8b5c;border-radius:20px;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .2s}
-.region-tab:hover{background:#e8f5e9}
-.region-tab.active{background:#4a8b5c;color:#fff}
+body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;background:#f5f5f5;color:#333}
+header{background:#2e7d32;color:#fff;padding:20px 16px;text-align:center;position:sticky;top:0;z-index:10}
+header h1{font-size:1.3rem;margin-bottom:4px}
+header p{font-size:.8rem;opacity:.9}
+.contact{background:#1b5e20;color:#fff;text-align:center;font-size:.8rem;padding:8px}
+.notice{max-width:900px;margin:12px auto;padding:12px 18px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px;color:#8d6e00;font-size:.88rem;text-align:center;line-height:1.5}
+.search-bar{max-width:900px;margin:0 auto;padding:0 16px 8px}
+.search-bar input{width:100%;padding:12px 16px;border:1px solid #ddd;border-radius:8px;font-size:1rem}
+.type-tabs{max-width:900px;margin:0 auto;padding:8px 16px;display:flex;gap:8px}
+.type-tabs button{flex:1;padding:12px;border:none;border-radius:8px;background:#e0e0e0;font-size:1rem;cursor:pointer;font-weight:bold}
+.type-tabs button.active{background:#2e7d32;color:#fff}
+.region-tabs{max-width:900px;margin:0 auto;padding:4px 16px 8px;display:flex;flex-wrap:wrap;gap:6px}
+.region-tabs button{padding:8px 14px;border:1px solid #ddd;border-radius:20px;background:#fff;font-size:.85rem;cursor:pointer}
+.region-tabs button.active{background:#2e7d32;color:#fff;border-color:#2e7d32}
 .stats{text-align:center;color:#888;font-size:.85rem;padding:4px 0 12px}
-.notice{max-width:900px;margin:0 auto 12px;padding:10px 18px;background:#fff8e1;border:1px solid #ffe082;border-radius:8px;color:#8d6e00;font-size:.85rem;text-align:center}
 .list-container{max-width:900px;margin:0 auto;padding:0 16px 30px}
-.card{background:#fff;border-radius:12px;padding:18px;margin-bottom:12px;box-shadow:0 2px 6px rgba(0,0,0,.07);cursor:pointer;transition:transform .15s,box-shadow .15s;border-left:5px solid #4a8b5c}
-.card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.12)}
-.card.seoul{border-left-color:#e74c3c}.card.incheon{border-left-color:#3498db}
-.card.daejeon{border-left-color:#9b59b6}.card.ulsan{border-left-color:#e67e22}
-.card.gyeonggi{border-left-color:#2ecc71}.card.gangwon{border-left-color:#1abc9c}
-.card.chungbuk{border-left-color:#f39c12}.card.chungnam{border-left-color:#d35400}
-.card.gyeongbuk{border-left-color:#c0392b}.card.gyeongnam{border-left-color:#8e44ad}
-.card.jeonbuk{border-left-color:#2980b9}.card.jeonnam{border-left-color:#27ae60}
-.card.jeju{border-left-color:#f1c40f}
-.card h3{font-size:1.1rem;color:#2d5a3d;margin-bottom:6px}
-.card .phone{color:#2d5a3d;font-weight:700;font-size:1rem;text-decoration:none;display:inline-block;margin:4px 0}
-.card .phone:hover{text-decoration:underline}
-.card .addr{color:#777;font-size:.88rem;margin-top:4px}
-.card .badge{display:inline-block;background:#e8f5e9;color:#2d5a3d;font-size:.75rem;padding:2px 10px;border-radius:10px;margin-bottom:8px;font-weight:600}
-.card .notes{color:#c0392b;font-size:.8rem;margin-top:4px}
-#mapModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:1000;justify-content:center;align-items:center}
+.card{background:#fff;border-radius:10px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);cursor:pointer}
+.card h3{font-size:1.05rem;margin-bottom:6px;color:#1b5e20}
+.card .type-badge{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:10px;margin-bottom:6px;font-weight:bold}
+.card .type-badge.수양관{background:#e8f5e9;color:#2e7d32}
+.card .type-badge.수양관외{background:#e3f2fd;color:#1565c0}
+.card .phone{display:inline-block;color:#1565c0;text-decoration:none;font-size:.95rem;margin:4px 0}
+.card .addr{font-size:.85rem;color:#666;margin-top:4px}
+.card .cat{font-size:.78rem;color:#999;margin-top:4px}
+#mapModal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center;padding:20px}
 #mapModal.show{display:flex}
-.modal-content{background:#fff;border-radius:16px;width:92%;max-width:700px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column}
-.modal-header{padding:16px 20px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
-.modal-header h3{font-size:1.1rem;color:#2d5a3d}
-.close-btn{background:none;border:none;font-size:1.5rem;cursor:pointer;color:#888}
-#map{width:100%;height:400px}
-.modal-body{padding:16px 20px}
-.modal-body .phone{font-size:1.1rem;font-weight:700;color:#2d5a3d;text-decoration:none}
-.modal-body .addr{color:#666;margin-top:4px}
-.footer{text-align:center;padding:24px 16px;color:#999;font-size:.85rem;border-top:1px solid #e0ddd6;margin-top:10px}
-.no-result{text-align:center;padding:40px;color:#999}
-@media(max-width:600px){.header h1{font-size:1.3rem}.card{padding:14px}}
+.modal-content{background:#fff;border-radius:12px;width:100%;max-width:600px;max-height:90vh;overflow:auto}
+.modal-header{padding:16px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff}
+.modal-header h3{font-size:1.1rem}
+.modal-close{border:none;background:none;font-size:1.5rem;cursor:pointer;color:#999}
+.modal-body{padding:16px}
+#map{width:100%;height:400px;border-radius:8px;background:#f0f0f0}
+.modal-body .phone{display:inline-block;margin:8px 0;color:#1565c0;text-decoration:none;font-size:1rem}
+.modal-body .addr{font-size:.9rem;color:#666;margin-bottom:8px}
+.modal-body .notes{font-size:.82rem;color:#888;background:#f9f9f9;padding:8px;border-radius:6px;margin-top:8px;line-height:1.5}
+footer{text-align:center;padding:20px;color:#999;font-size:.8rem}
 </style>
 </head>
 <body>
-
-<div class="header">
-<h1>🏕️ 전국 수양관 리스트</h1>
-<p>지역별로 수양관을 찾아보세요 · 카드를 누르면 지도 표시</p>
-</div>
-
+<header>
+<h1>⛪ 전국수련회 장소 리스트</h1>
+<p>교회가 실제 수련회 갈 수 있는 곳 · 카드를 누르면 지도 표시</p>
+</header>
+<div class="contact">앱 문의) shs목사 · ttd0732@hanmail.net</div>
+<div class="notice">※ 방문 전에 <b>꼭 전화로 미리 연락</b>해 보세요.<br>주소와 연락처는 변경될 수 있습니다.</div>
 <div class="search-bar">
-<input type="text" id="searchInput" placeholder="수양관 이름으로 검색...">
+<input type="text" id="searchInput" placeholder="🔍 장소 이름으로 검색...">
 </div>
-
+<div class="type-tabs" id="typeTabs">
+<button data-type="all" class="active">전체</button>
+<button data-type="수양관">수양관</button>
+<button data-type="수양관외">수양관 외</button>
+</div>
 <div class="region-tabs" id="regionTabs"></div>
 <div class="stats" id="stats"></div>
-<div class="notice">※ 주소와 연락처는 변경될 수 있으니 방문 전 전화로 확인해 주세요.</div>
 <div class="list-container" id="listContainer"></div>
 
 <div id="mapModal">
 <div class="modal-content">
 <div class="modal-header">
 <h3 id="modalTitle"></h3>
-<button class="close-btn" onclick="closeModal()">&times;</button>
+<button class="modal-close" onclick="closeModal()">×</button>
 </div>
-<div id="map"></div>
 <div class="modal-body" id="modalBody"></div>
+<div style="padding:0 16px 16px"><div id="map"></div></div>
 </div>
 </div>
 
-<div class="footer">
-앱 문의) shs목사 · ttd0732@hanmail.net
-</div>
+<footer>앱 문의) shs목사 · ttd0732@hanmail.net</footer>
 
-<script src="suyang_data.js"></script>
+<script src="retreat_data.js"></script>
 <script>
-// 카카오맵 API 키를 여기에 입력하세요 (developers.kakao.com에서 무료 발급)
 const KAKAO_API_KEY = '90f233691556905b1336f96831a3618a';
-
-const regions = [
-  {key:'all',name:'전체'},{key:'서울',name:'서울'},{key:'인천',name:'인천'},
-  {key:'대전',name:'대전'},{key:'울산',name:'울산'},{key:'경기',name:'경기'},
-  {key:'강원',name:'강원'},{key:'충북',name:'충북'},{key:'충남',name:'충남'},
-  {key:'경북',name:'경북'},{key:'경남',name:'경남'},{key:'전북',name:'전북'},
-  {key:'전남',name:'전남'},{key:'제주',name:'제주'}
-];
-const regionClass = {'서울':'seoul','인천':'incheon','대전':'daejeon','울산':'ulsan','경기':'gyeonggi','강원':'gangwon','충북':'chungbuk','충남':'chungnam','경북':'gyeongbuk','경남':'gyeongnam','전북':'jeonbuk','전남':'jeonnam','제주':'jeju'};
-
+let currentType = 'all';
 let currentRegion = 'all';
-let searchTerm = '';
+let searchQuery = '';
 
-// 지역 탭 생성
-const tabsEl = document.getElementById('regionTabs');
-regions.forEach(r => {
-  const btn = document.createElement('button');
-  btn.className = 'region-tab' + (r.key==='all'?' active':'');
-  btn.textContent = r.name;
-  btn.onclick = () => { currentRegion = r.key; document.querySelectorAll('.region-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderList(); };
-  tabsEl.appendChild(btn);
-});
+const REGIONS = ['서울','인천','경기','강원','충북','충남','대전','세종','전북','전남','광주','경북','경남','대구','울산','부산','제주'];
 
-// 검색
-document.getElementById('searchInput').addEventListener('input', e => {
-  searchTerm = e.target.value.trim();
-  renderList();
-});
+function escapeHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 
-// 리스트 렌더링
-function renderList() {
-  const container = document.getElementById('listContainer');
-  let filtered = SUYANG_DATA;
-  if (currentRegion !== 'all') filtered = filtered.filter(d => d.region === currentRegion);
-  if (searchTerm) filtered = filtered.filter(d => d.name.includes(searchTerm));
-  
-  document.getElementById('stats').textContent = `총 ${filtered.length}곳`;
-  
-  if (filtered.length === 0) {
-    container.innerHTML = '<div class="no-result">검색 결과가 없습니다.</div>';
+function initRegionTabs(){
+  const c = document.getElementById('regionTabs');
+  c.innerHTML = '<button data-region="all" class="active">전체지역</button>' +
+    REGIONS.map(r=>`<button data-region="${r}">${r}</button>`).join('');
+  c.querySelectorAll('button').forEach(b=>{
+    b.onclick = ()=>{
+      c.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      currentRegion = b.dataset.region;
+      renderList();
+    };
+  });
+}
+
+function getFiltered(){
+  return RETREAT_DATA.filter(d=>{
+    if(currentType!=='all' && d.type!==currentType) return false;
+    if(currentRegion!=='all' && d.region!==currentRegion) return false;
+    if(searchQuery && !d.name.includes(searchQuery)) return false;
+    return true;
+  });
+}
+
+function renderList(){
+  const data = getFiltered();
+  const c = document.getElementById('listContainer');
+  document.getElementById('stats').textContent = `총 ${data.length}곳`;
+  if(!data.length){
+    c.innerHTML = '<div style="text-align:center;padding:40px;color:#999">검색 결과가 없습니다.</div>';
     return;
   }
-  
-  container.innerHTML = filtered.map((d, i) => {
-    const idx = SUYANG_DATA.indexOf(d);
-    return `<div class="card ${regionClass[d.region]||''}" onclick="showMap(${idx})">
-      <span class="badge">${d.region}</span>
+  c.innerHTML = data.map((d,i)=>{
+    const idx = RETREAT_DATA.indexOf(d);
+    const tel = d.phone.replace(/[^0-9]/g,'');
+    return `<div class="card" onclick="showMap(${idx})">
+      <span class="type-badge ${d.type}">${d.type==='수양관'?'수양관':'수양관 외'}</span>
       <h3>${escapeHtml(d.name)}</h3>
-      <a class="phone" href="tel:${d.phone.replace(/[^0-9]/g,'')}" onclick="event.stopPropagation()">📞 ${escapeHtml(d.phone)}</a>
+      <a class="phone" href="tel:${tel}" onclick="event.stopPropagation()">📞 ${escapeHtml(d.phone)}</a>
       <div class="addr">📍 ${escapeHtml(d.address||'주소 미등록')}</div>
-      ${d.notes ? `<div class="notes">* ${escapeHtml(d.notes)}</div>` : ''}
+      <div class="cat">${escapeHtml(d.region)} · ${escapeHtml(d.city)}${d.category?' · '+escapeHtml(d.category):''}</div>
     </div>`;
   }).join('');
 }
 
-function escapeHtml(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function closeModal(){
+  document.getElementById('mapModal').classList.remove('show');
 }
 
-// 카카오맵 로드
+document.getElementById('mapModal').addEventListener('click', e=>{
+  if(e.target.id==='mapModal') closeModal();
+});
+
+// 타입 탭
+document.getElementById('typeTabs').querySelectorAll('button').forEach(b=>{
+  b.onclick = ()=>{
+    document.querySelectorAll('#typeTabs button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    currentType = b.dataset.type;
+    renderList();
+  };
+});
+
+// 검색
+document.getElementById('searchInput').addEventListener('input', e=>{
+  searchQuery = e.target.value.trim();
+  renderList();
+});
+
+// 카카오맵
 let kakaoLoaded = false;
 let kakaoFailed = false;
-function loadKakaoMap(callback) {
-  if (kakaoLoaded) { callback(); return; }
-  if (kakaoFailed) {
-    document.getElementById('map').innerHTML = '<div style="padding:40px;text-align:center;color:#999;">지도를 불러오지 못했습니다.<br>잠시 후 다시 시도해 주세요.</div>';
+function loadKakaoMap(callback){
+  if(kakaoLoaded){callback();return;}
+  if(kakaoFailed){
+    document.getElementById('map').innerHTML = '<div style="padding:40px;text-align:center;color:#999">지도를 불러오지 못했습니다.<br>잠시 후 다시 시도해 주세요.</div>';
     return;
   }
   const script = document.createElement('script');
   script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&libraries=services&autoload=false`;
-  script.onload = () => { kakao.maps.load(() => { kakaoLoaded = true; callback(); }); };
-  script.onerror = () => {
+  script.onload = ()=>{kakao.maps.load(()=>{kakaoLoaded=true;callback();});};
+  script.onerror = ()=>{
     kakaoFailed = true;
-    document.getElementById('map').innerHTML = '<div style="padding:40px;text-align:center;color:#999;">지도를 불러오지 못했습니다.<br>잠시 후 다시 시도해 주세요.</div>';
+    document.getElementById('map').innerHTML = '<div style="padding:40px;text-align:center;color:#999">지도를 불러오지 못했습니다.<br>잠시 후 다시 시도해 주세요.</div>';
   };
   document.head.appendChild(script);
 }
 
 let mapInstance = null;
-function showMap(idx) {
-  const d = SUYANG_DATA[idx];
+function showMap(idx){
+  const d = RETREAT_DATA[idx];
   document.getElementById('modalTitle').textContent = d.name;
-  document.getElementById('modalBody').innerHTML = `
-    <a class="phone" href="tel:${d.phone.replace(/[^0-9]/g,'')}">📞 ${escapeHtml(d.phone)}</a>
+  const tel = d.phone.replace(/[^0-9]/g,'');
+  let bodyHtml = `
+    <a class="phone" href="tel:${tel}">📞 ${escapeHtml(d.phone)}</a>
     <div class="addr">📍 ${escapeHtml(d.address||'주소 미등록')}</div>
   `;
+  if(d.notes){
+    bodyHtml += `<div class="notes">${escapeHtml(d.notes)}</div>`;
+  }
+  document.getElementById('modalBody').innerHTML = bodyHtml;
   document.getElementById('mapModal').classList.add('show');
 
-  loadKakaoMap(() => {
+  loadKakaoMap(()=>{
     const mapContainer = document.getElementById('map');
     mapContainer.innerHTML = '';
-    const mapOption = { center: new kakao.maps.LatLng(36.5, 127.5), level: 8 };
+    const mapOption = {center: new kakao.maps.LatLng(36.5, 127.5), level: 8};
     mapInstance = new kakao.maps.Map(mapContainer, mapOption);
-    // 모달이 열린 뒤 지도 크기를 다시 계산
-    setTimeout(() => { mapInstance.relayout(); }, 100);
+    setTimeout(()=>{mapInstance.relayout();}, 100);
 
-    if (d.address) {
+    if(d.address){
       const geocoder = new kakao.maps.services.Geocoder();
-      geocoder.addressSearch(d.address, (result, status) => {
-        if (status === kakao.maps.services.Status.OK) {
+      geocoder.addressSearch(d.address, (result, status)=>{
+        if(status === kakao.maps.services.Status.OK){
           const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-          const marker = new kakao.maps.Marker({ map: mapInstance, position: coords });
-          const infowindow = new kakao.maps.InfoWindow({ content: `<div style="padding:5px;font-size:12px;">${escapeHtml(d.name)}</div>` });
+          const marker = new kakao.maps.Marker({map: mapInstance, position: coords});
+          const infowindow = new kakao.maps.InfoWindow({content: `<div style="padding:5px;font-size:12px;">${escapeHtml(d.name)}</div>`});
           infowindow.open(mapInstance, marker);
           mapInstance.setCenter(coords);
           mapInstance.setLevel(4);
-        } else {
+        }else{
           document.getElementById('modalBody').innerHTML += `<div class="notes">* 지도에서 주소를 찾지 못했습니다.</div>`;
         }
       });
@@ -206,15 +223,13 @@ function showMap(idx) {
   });
 }
 
-function closeModal() {
-  document.getElementById('mapModal').classList.remove('show');
+// PWA 서비스 워커
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
-document.getElementById('mapModal').addEventListener('click', e => {
-  if (e.target.id === 'mapModal') closeModal();
-});
 
+initRegionTabs();
 renderList();
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 </script>
 </body>
 </html>
