@@ -6,6 +6,11 @@
 <title>전국 수양관 리스트</title>
 <meta property="og:title" content="전국 수양관 리스트">
 <meta property="og:description" content="전국 수양관을 지역별로 찾아보세요">
+<meta property="og:image" content="https://suyang-list.vercel.app/og-image.jpg">
+<meta property="og:url" content="https://suyang-list.vercel.app/">
+<meta name="theme-color" content="#4a8b5c">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Malgun Gothic','맑은 고딕',sans-serif;background:#f5f3ee;color:#333;line-height:1.6}
@@ -198,6 +203,7 @@ document.getElementById('mapModal').addEventListener('click', e => {
 });
 
 renderList();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 </script>
 </body>
 </html>
