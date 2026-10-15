@@ -14,7 +14,7 @@
       "type": "image/png"
     }
   ],
-  "name": "전국수련회 장소 리스트",
+  "name": "전국 수련회 장소 리스트",
   "short_name": "수련회 장소",
   "start_url": "/",
   "theme_color": "#2e7d32"
