@@ -153,15 +153,20 @@ function escapeHtml(s) {
 
 // 카카오맵 로드
 let kakaoLoaded = false;
+let kakaoFailed = false;
 function loadKakaoMap(callback) {
   if (kakaoLoaded) { callback(); return; }
-  if (KAKAO_API_KEY === 'YOUR_KAKAO_API_KEY_HERE') {
-    alert('카카오맵 API 키를 설정해주세요.\ndevelopers.kakao.com에서 무료로 발급받을 수 있습니다.');
+  if (kakaoFailed) {
+    document.getElementById('map').innerHTML = '<div style="padding:40px;text-align:center;color:#999;">지도를 불러오지 못했습니다.<br>잠시 후 다시 시도해 주세요.</div>';
     return;
   }
   const script = document.createElement('script');
-  script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&libraries=services&autoload=false`;
+  script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_API_KEY}&libraries=services&autoload=false`;
   script.onload = () => { kakao.maps.load(() => { kakaoLoaded = true; callback(); }); };
+  script.onerror = () => {
+    kakaoFailed = true;
+    document.getElementById('map').innerHTML = '<div style="padding:40px;text-align:center;color:#999;">지도를 불러오지 못했습니다.<br>잠시 후 다시 시도해 주세요.</div>';
+  };
   document.head.appendChild(script);
 }
 
@@ -174,23 +179,27 @@ function showMap(idx) {
     <div class="addr">📍 ${escapeHtml(d.address||'주소 미등록')}</div>
   `;
   document.getElementById('mapModal').classList.add('show');
-  
+
   loadKakaoMap(() => {
     const mapContainer = document.getElementById('map');
     mapContainer.innerHTML = '';
     const mapOption = { center: new kakao.maps.LatLng(36.5, 127.5), level: 8 };
     mapInstance = new kakao.maps.Map(mapContainer, mapOption);
-    
+    // 모달이 열린 뒤 지도 크기를 다시 계산
+    setTimeout(() => { mapInstance.relayout(); }, 100);
+
     if (d.address) {
       const geocoder = new kakao.maps.services.Geocoder();
       geocoder.addressSearch(d.address, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
           const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-          new kakao.maps.Marker({ map: mapInstance, position: coords });
+          const marker = new kakao.maps.Marker({ map: mapInstance, position: coords });
           const infowindow = new kakao.maps.InfoWindow({ content: `<div style="padding:5px;font-size:12px;">${escapeHtml(d.name)}</div>` });
-          infowindow.open(mapInstance, new kakao.maps.Marker({position: coords}));
+          infowindow.open(mapInstance, marker);
           mapInstance.setCenter(coords);
           mapInstance.setLevel(4);
+        } else {
+          document.getElementById('modalBody').innerHTML += `<div class="notes">* 지도에서 주소를 찾지 못했습니다.</div>`;
         }
       });
     }
