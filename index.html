@@ -66,9 +66,9 @@ footer{text-align:center;padding:20px;color:#999;font-size:.8rem}
 <input type="text" id="searchInput" placeholder="🔍 장소 이름으로 검색...">
 </div>
 <div class="type-tabs" id="typeTabs">
-<button data-type="all" class="active">전체</button>
-<button data-type="수양관">수양관</button>
-<button data-type="수양관외">수양관 외</button>
+<button data-type="all" class="active">전체 <span id="cntAll"></span></button>
+<button data-type="수양관">수양관 <span id="cntSuyang"></span></button>
+<button data-type="수양관외">수양관 외 <span id="cntOther"></span></button>
 </div>
 <div class="region-tabs" id="regionTabs"></div>
 <div class="stats" id="stats"></div>
@@ -230,7 +230,16 @@ if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
 
+function updateTypeCounts(){
+  const suyang = RETREAT_DATA.filter(d=>d.type==='수양관').length;
+  const other = RETREAT_DATA.filter(d=>d.type==='수양관외').length;
+  document.getElementById('cntAll').textContent = `(${RETREAT_DATA.length})`;
+  document.getElementById('cntSuyang').textContent = `(${suyang})`;
+  document.getElementById('cntOther').textContent = `(${other})`;
+}
+
 initRegionTabs();
+updateTypeCounts();
 renderList();
 </script>
 </body>
